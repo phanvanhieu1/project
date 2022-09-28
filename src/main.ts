@@ -1,25 +1,30 @@
-import { NestFactory } from '@nestjs/core';
+import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './route/app/app.module';
 import * as session from 'express-session'
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationError, ValidationPipe } from '@nestjs/common';
+import  AllExceptionsFilter  from './util/filter/all-exceptions.filter';
+import ValidationExceptions from './util/exception/validation.exceptions';
+var bodyParser = require('body-parser')
+
+
+
 
 
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule)
-  app.enable('trust proxy', true)
 
   app.useGlobalPipes(
     new ValidationPipe({
-        transform: true,
-        transformOptions: {
-            enableImplicitConversion: true
-        },
-        forbidNonWhitelisted: true,
-        whitelist: true
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      exceptionFactory: (errors: ValidationError[]) => new ValidationExceptions(errors),
     }),
-)
+  )
+
+  app.useGlobalFilters(new AllExceptionsFilter())
+  app.use(bodyParser.urlencoded({ extended: true }))
 
   await app.listen(process.env.PORT || 3000);
   console.dir('App running...', { depth: null })

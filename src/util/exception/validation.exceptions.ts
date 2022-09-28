@@ -1,34 +1,17 @@
-import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus, Inject } from '@nestjs/common'
-import { Request, Response } from 'express'
+import { BadRequestException, ValidationError } from '@nestjs/common'
 
-@Catch()
-export class AllExceptionFilter implements ExceptionFilter {
-
-    constructor(
-    ) { }
-
-    catch(exception: any, host: ArgumentsHost) {
-        console.dir(exception, { depth: null })
-
-        const ctx = host.switchToHttp()
-        const response = ctx.getResponse<Response>()
-        const request = ctx.getRequest<Request>()
-
-        let status = (exception instanceof HttpException)
-            ? exception.getStatus()
-            : HttpStatus.BAD_REQUEST
-
-        let messagesError = (exception instanceof HttpException)
-            ? (exception.getResponse()['message'] || exception.getResponse())
-            : [exception.message]
-
-        response
-            .status(status)
-            .json({
-                statusCode: status,
-                timestamp: new Date().toLocaleString(),
-                path: request.method.toUpperCase() + ' ' + request.url,
-                message: messagesError
-            })
+function transform(errors: ValidationError[]) {
+  return errors.map((error) => {
+    return {
+      detail: `${error.property} validation error`,
+      source: { pointer: `data/attributes/${error.property}` },
+      meta: error.constraints ? Object.values(error.constraints) : null,
     }
+  })
+}
+
+export default class ValidationExceptions extends BadRequestException {
+  constructor(public validationErrors: ValidationError[]) {
+    super({ errorType: 'ValidationError', errors: transform(validationErrors) })
+  }
 }

@@ -57,7 +57,4 @@ export class User {
 
 export type UserDocument = User & Document
 
-export const UserSchema = SchemaFactory.createForClass(User).set('versionKey', false)
-UserSchema.index({ username: 1 }, { unique: true, sparse: true })
-UserSchema.index({ email: 1 }, { unique: true, sparse: true })
-UserSchema.index({ phone: 1 }, { unique: true, sparse: true })
+export const UserSchema = SchemaFactory.createForClass(User)

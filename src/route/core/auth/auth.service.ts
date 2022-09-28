@@ -1,31 +1,47 @@
 import { Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { Types } from 'mongoose';
 import { UserService } from '../user/user.service';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import authConstants from './auth-constants';
+import SignUpDto from './dto/sign-up.dto';
+import { LoginPayload } from './interfaces/login-payload.interface';
+
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userService: UserService,
+    private readonly jwtService: JwtService,
   ) {}
 
-  register(createAuthDto: CreateAuthDto) {
-    return `This action adds a new auth`;
+  async register(data: SignUpDto) {
+    return await this.userService.create(data);
   }
 
-  findAll() {
-    return `This action returns all auth`;
+  async createVerifyToken(id: Types.ObjectId):Promise<string> {
+    return this.jwtService.sign(
+      { id },
+      {
+        expiresIn: authConstants.jwt.expirationTime.accessToken,
+        secret: authConstants.jwt.secrets.accessToken,
+      },
+    )
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
+  async login(data: LoginPayload): Promise<string> {
+    const payload: LoginPayload = {
+      _id: data._id,
+      id: data._id,
+      role: data.role,
+      email: data.email,
+    }
 
-  update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
-  }
+    const accessToken = this.jwtService.sign(payload, {
+      expiresIn: authConstants.jwt.expirationTime.accessToken,
+      secret: authConstants.jwt.secrets.accessToken,
+    })
+    return accessToken
 
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
-  }
+
+}
 }

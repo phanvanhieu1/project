@@ -3,7 +3,7 @@ import { Injectable } from "@nestjs/common";
 
 
 @Injectable()
-export default class UserRespnsitory {
+export default class AuthRepository {
 constructor() {
 }
 }

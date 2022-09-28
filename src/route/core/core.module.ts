@@ -5,7 +5,7 @@ import { UserModule } from "./user/user.module";
 
 const routes: Routes = [
     {
-        path: '/api',
+        path: 'api',
         children: [{
             path: '/auth',
             module: AuthModule,
