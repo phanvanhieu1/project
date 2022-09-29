@@ -5,16 +5,10 @@ import * as session from 'express-session'
 import { ValidationError, ValidationPipe } from '@nestjs/common';
 import  AllExceptionsFilter  from './util/filter/all-exceptions.filter';
 import ValidationExceptions from './util/exception/validation.exceptions';
+import { getUserMiddleware } from './util/middleware/get-user.middleware';
 var bodyParser = require('body-parser')
-
-
-
-
-
-
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule)
-
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,

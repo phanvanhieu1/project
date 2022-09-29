@@ -12,6 +12,8 @@ export enum ErrorThrowEnum {
   USER_NOT_FOUND = 'USER_NOT_FOUND',
   EMAIL_ALREADY_EXISTS = 'EMAIL_ALREADY_EXISTS',
   PASSWORD_NOT_MATCH = 'PASSWORD_NOT_MATCH',
+  INVALID_TOKEN = 'INVALID_TOKEN',
+  UNAUTHERIZED = 'UNAUTHERIZED',
 }
 
 export const ErrorThrow = (...errorThrow: ErrorThrowEnum[]) => SetMetadata('errorThrow', errorThrow)

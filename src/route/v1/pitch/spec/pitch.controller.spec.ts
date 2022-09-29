@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PitchController } from './pitch.controller';
-import { PitchService } from './pitch.service';
+import { PitchController } from '../pitch.controller';
+import { PitchService } from '../pitch.service';
 
 describe('PitchController', () => {
   let controller: PitchController;

@@ -5,6 +5,7 @@ import { UserService } from '../user/user.service';
 import authConstants from './auth-constants';
 import SignUpDto from './dto/sign-up.dto';
 import { LoginPayload } from './interfaces/login-payload.interface';
+import * as jwt from 'jsonwebtoken';
 
 
 @Injectable()
@@ -19,13 +20,9 @@ export class AuthService {
   }
 
   async createVerifyToken(id: Types.ObjectId):Promise<string> {
-    return this.jwtService.sign(
-      { id },
-      {
-        expiresIn: authConstants.jwt.expirationTime.accessToken,
-        secret: authConstants.jwt.secrets.accessToken,
-      },
-    )
+    return jwt.sign({
+      data: id,
+    }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRATION_TIME });
   }
 
   async login(data: LoginPayload): Promise<string> {

@@ -2,7 +2,6 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { Document, Schema as MongooseSchema } from 'mongoose'
 import { RoleUserEnum } from 'src/util/enum/role-user.enum'
 
-// import { FileManager } from '@route/core/file-manager/schemas/file-manager.schema'
 
 @Schema({ timestamps: true })
 export class User {

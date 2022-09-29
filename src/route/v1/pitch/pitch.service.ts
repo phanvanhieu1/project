@@ -1,11 +1,17 @@
 import { Injectable } from '@nestjs/common';
-import { CreatePitchDto } from './dto/create-pitch.dto';
+import CreatePitchDto from './dto/create-pitch.dto';
+import PitchRepository from './pitch.repository';
 import { UpdatePitchDto } from './dto/update-pitch.dto';
 
 @Injectable()
 export class PitchService {
+  constructor(
+    private readonly pitchRepository: PitchRepository,
+  ) {}
+
+
   create(createPitchDto: CreatePitchDto) {
-    return 'This action adds a new pitch';
+    return this.pitchRepository.createPitch(createPitchDto);
   }
 
   findAll() {

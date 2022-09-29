@@ -1,9 +1,9 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { PitchService } from './pitch.service';
-import { CreatePitchDto } from './dto/create-pitch.dto';
 import { UpdatePitchDto } from './dto/update-pitch.dto';
+import CreatePitchDto from './dto/create-pitch.dto';
 
-@Controller('pitch')
+@Controller()
 export class PitchController {
   constructor(private readonly pitchService: PitchService) {}
 
