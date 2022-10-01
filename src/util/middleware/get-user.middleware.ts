@@ -8,13 +8,14 @@ export class getUserMiddleware implements NestMiddleware {
     use(req: Request, res: Response, next: NextFunction) {
         const authJwt = req.headers.authorization;
         if (!authJwt) {
-            throw new Error(ErrorThrowEnum.UNAUTHERIZED);
+            next();
+            return;
         }
         try {
             const datatoken:any = jwt.verify(authJwt, process.env.JWT_SECRET);
             const user = datatoken.data;
             if(user) {
-                req.user = user;
+                 req.user = user;
             }else{
                 throw new Error(ErrorThrowEnum.INVALID_TOKEN);
             }

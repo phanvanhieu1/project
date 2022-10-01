@@ -1,9 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { PitchService } from './pitch.service';
 import { UpdatePitchDto } from './dto/update-pitch.dto';
 import CreatePitchDto from './dto/create-pitch.dto';
+import { AuthenticationGuard } from 'src/util/guard/authentication.guard';
 
 @Controller()
+@UseGuards(AuthenticationGuard)
 export class PitchController {
   constructor(private readonly pitchService: PitchService) {}
 

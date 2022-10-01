@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { Request } from 'express';
 
 @Controller('user')
 export class UserController {
@@ -9,7 +10,8 @@ export class UserController {
 
 
   @Get()
-  findAll() {
+  findAll(@Req() req: Request) {
+    console.log(req);
     return this.userService.findAll();
   }
 
