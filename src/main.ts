@@ -21,7 +21,7 @@ async function bootstrap() {
   app.useGlobalFilters(new AllExceptionsFilter())
   app.use(bodyParser.urlencoded({ extended: true }))
 
-  await app.listen(process.env.port || 3000)
+  await app.listen(process.env.PORT || 3000)
   console.dir('App running...', { depth: null })
   
 }
