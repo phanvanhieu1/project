@@ -9,17 +9,18 @@ import {
   Validate,
   ValidateIf,
 } from 'class-validator'
+import EmailValidation from 'src/util/validation/email.validation'
 import UsernameValidation from 'src/util/validation/username.validation'
 
 export default class SignInDto {
   @ApiProperty({ type: String, required: false })
   @IsOptional()
-  @ValidateIf((o) => o.username !== undefined && o.username !== null && o.username !== '')
+  @ValidateIf((o) => o.email !== undefined && o.email !== null && o.email !== '')
   @IsString()
-  @Validate(UsernameValidation)
+  @Validate(EmailValidation)
   @MinLength(3)
   @MaxLength(128)
-  readonly username?: string
+  readonly email?: string
 
   @ApiProperty({ type: String })
   @IsNotEmpty()

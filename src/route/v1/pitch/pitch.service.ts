@@ -10,23 +10,23 @@ export class PitchService {
   ) {}
 
 
-  create(createPitchDto: CreatePitchDto) {
-    return this.pitchRepository.createPitch(createPitchDto);
+  async create(createPitchDto: CreatePitchDto): Promise<any> {
+    return await this.pitchRepository.createPitch(createPitchDto);
   }
 
-  findAll() {
-    return `This action returns all pitch`;
+  async findAll(query: any): Promise<any> {
+    return await this.pitchRepository.findAll(query);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} pitch`;
+  async findOne(id: any) {
+    return await this.pitchRepository.findOne(id);
   }
 
-  update(id: number, updatePitchDto: UpdatePitchDto) {
-    return `This action updates a #${id} pitch`;
+  async update(id: any, updatePitchDto: UpdatePitchDto) {
+    return await this.pitchRepository.update(id, updatePitchDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} pitch`;
+  async remove(id: any) {
+    return await this.pitchRepository.remove(id);
   }
 }

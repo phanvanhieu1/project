@@ -19,6 +19,7 @@ import UserRespository from '../user/user.repository';
 import { comparePassword } from 'src/util/hash/bcrypt';
 import UserEntity from './entities/auth.entity';
 import SignOutDto from './dto/sign-out.dto';
+import { forgotPasswordDto } from './dto/forgot-password.dto';
 
 @Controller()
 export class AuthController {
@@ -30,7 +31,7 @@ export class AuthController {
   @Post('sign-up')
   async signUp(@Body() data: SignUpDto) {
     const registerUser = await this.authService.register(data);
-    const token = await this.authService.createVerifyToken(registerUser._id);
+    const token = await this.authService.createVerifyToken(registerUser._id, registerUser.role);
     const rs = {
       accessToken: token,
       user: registerUser,
@@ -40,7 +41,7 @@ export class AuthController {
 
   @Post('sign-in')
   async signIn(@Body() body: SignInDto): Promise<any | never> {
-    const userDB = await this.userRepository.checkUser(body.username);
+    const userDB = await this.userRepository.checkUser(body.email);
     if(userDB===null){
       throw new Error(ErrorThrowEnum.USER_NOT_FOUND);
     }
@@ -49,9 +50,23 @@ export class AuthController {
       throw new Error(ErrorThrowEnum.PASSWORD_NOT_MATCH);
     }
     const result = {
-      accessToken: await this.authService.createVerifyToken(userDB._id),
+      accessToken: await this.authService.createVerifyToken(userDB._id, userDB.role),
       user: userDB,
     }
     return ResponseUtils.success(result)
+  }
+
+  @Post('forgot-password')
+  async forgotPassword(@Body() body: forgotPasswordDto): Promise<any | never> {
+    const userDB = await this.userRepository.checkUser(body.email);
+    if(userDB===null){
+      throw new Error(ErrorThrowEnum.EMAIL_ALREADY_EXISTS);
+    }
+    const token = await this.authService.createVerifyToken(userDB._id, userDB.role);
+    const rs = {
+      accessToken: token,
+      user: userDB,
+    };
+    return ResponseUtils.success(rs);
   }
 }

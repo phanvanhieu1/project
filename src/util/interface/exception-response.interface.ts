@@ -15,5 +15,4 @@ export interface ExceptionResponse {
 
 export interface RequestExpress extends Request {
   user: any
-  aqp: any
 }

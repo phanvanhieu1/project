@@ -41,11 +41,21 @@ export class AppModule implements NestModule{
     consumer
       .apply(getUserMiddleware)
       .forRoutes(
+        //api pitch
         { path: 'v1/pitch', method: RequestMethod.GET },
         { path: 'v1/pitch', method: RequestMethod.POST },
         { path: 'v1/pitch/:id', method: RequestMethod.GET },
         { path: 'v1/pitch/:id', method: RequestMethod.PUT },
         { path: 'v1/pitch/:id', method: RequestMethod.DELETE },
+        //api employee
+        { path: 'v1/employee', method: RequestMethod.GET },
+        { path: 'v1/employee', method: RequestMethod.POST },
+        { path: 'v1/employee/:id', method: RequestMethod.GET },
+        { path: 'v1/employee/:id', method: RequestMethod.PUT },
+        { path: 'v1/employee/:id', method: RequestMethod.PATCH },
+        { path: 'v1/employee/:id', method: RequestMethod.DELETE },
+
+
       );
   }
 }

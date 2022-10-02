@@ -19,9 +19,10 @@ export class AuthService {
     return await this.userService.create(data);
   }
 
-  async createVerifyToken(id: Types.ObjectId):Promise<string> {
+  async createVerifyToken(id: Types.ObjectId, role: any):Promise<string> {
     return jwt.sign({
-      data: id,
+      id: id,
+      role: role,
     }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRATION_TIME });
   }
 

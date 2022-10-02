@@ -22,8 +22,8 @@ export default class CreatePitchDto {
   @IsString()
   readonly type?: string;
 
-  @ApiProperty({ required: true })
-  @IsNotEmpty()
+  @ApiProperty()
+  @IsOptional()
   @IsEnum(StatusEnum)
   readonly status?: StatusEnum;
 

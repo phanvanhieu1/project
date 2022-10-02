@@ -2,6 +2,7 @@ import { SetMetadata } from '@nestjs/common'
 
 // eslint-disable-next-line no-shadow
 export enum ErrorThrowEnum {
+  UNAUTHORIZED = 'UNAUTHORIZED',
   UNAUTHORIZED_EXCEPTION = 'UNAUTHORIZED_EXCEPTION',
   ERROR = 'ERROR',
   DUPLICATE_KEY = 'DUPLICATE_KEY',
@@ -12,6 +13,9 @@ export enum ErrorThrowEnum {
   PASSWORD_NOT_MATCH = 'PASSWORD_NOT_MATCH',
   INVALID_TOKEN = 'INVALID_TOKEN',
   UNAUTHERIZED = 'UNAUTHERIZED',
+  PITCH_ALREADY_EXISTS = 'PITCH_ALREADY_EXISTS',
+  EMPLOYEE_ALREADY_EXISTS = 'EMPLOYEE_ALREADY_EXISTS',
+  EMPLOYEE_ALREADY_DELETED = 'EMPLOYEE_ALREADY_DELETED',
 }
 
 export const ErrorThrow = (...errorThrow: ErrorThrowEnum[]) => SetMetadata('errorThrow', errorThrow)

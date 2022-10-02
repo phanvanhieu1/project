@@ -7,10 +7,15 @@ import { User, UserDocument } from './schemas/user.schemas';
 export default class UserRespository {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
+
+  public async findUser(id: any): Promise<User> {
+    const data =await this.userModel.findById(id);
+    console.log(data);
+    return data;
+  }
+
   public async checkUser(data: string): Promise<any> {
-    return this.userModel.findOne({
-      $or: [{ email: { $in: data } }, { username: { $in: data } }],
-    });
+    return await this.userModel.findOne({ email: data });
   }
 
   public async create(user: any): Promise<User> {

@@ -1,5 +1,6 @@
 import { Module } from "@nestjs/common";
 import { RouterModule, Routes } from "nest-router";
+import { EmployeeModule } from "./employee/employee.module";
 import { PitchModule } from "./pitch/pitch.module";
 
 const routesv1: Routes = [
@@ -9,6 +10,10 @@ const routesv1: Routes = [
             path: '/pitch',
             module: PitchModule,
         },
+        {
+            path: '/employee',
+            module: EmployeeModule,
+        }
     ]
     },
 ]
@@ -16,7 +21,8 @@ const routesv1: Routes = [
 @Module({
     imports: [
         RouterModule.forRoutes(routesv1),
-        PitchModule
+        PitchModule,
+        EmployeeModule,
     ]
 })
 export class RouteV1Module { }

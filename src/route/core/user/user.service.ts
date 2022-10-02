@@ -27,12 +27,12 @@ export class UserService {
     
   }
 
-  findAll() {
-    return `This action returns all user`;
+  findAll(id:any) {
+    return this.userRepository.findUser(id);
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} user`;
+  
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {

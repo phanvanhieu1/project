@@ -1,26 +1,40 @@
 import { Injectable } from '@nestjs/common';
-import { CreateEmployeeDto } from './dto/create-employee.dto';
+import  CreateEmployeeDto  from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
+import EmployeeRepository from './employee.reponsitory';
 
 @Injectable()
 export class EmployeeService {
-  create(createEmployeeDto: CreateEmployeeDto) {
-    return 'This action adds a new employee';
+  constructor(private readonly employeeRepository:EmployeeRepository){}
+  async create(createEmployeeDto: CreateEmployeeDto) {
+    return await this.employeeRepository.createEmployee(createEmployeeDto);
   }
 
-  findAll() {
-    return `This action returns all employee`;
+  async findAll(query: any) {
+    return await this.employeeRepository.findAll(query);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} employee`;
+  async findAllDeleted(query: any) {
+    return await this.employeeRepository.findAllDeleted(query);
   }
 
-  update(id: number, updateEmployeeDto: UpdateEmployeeDto) {
-    return `This action updates a #${id} employee`;
+  async findOne(id: any) {
+    return await this.employeeRepository.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} employee`;
+  async update(id: any, updateEmployeeDto: UpdateEmployeeDto) {
+    return await this.employeeRepository.update(id, updateEmployeeDto);
+  }
+
+  async remove(id: any) {
+    return await this.employeeRepository.remove(id);
+  }
+
+  async destroy(id: any) {
+    return await this.employeeRepository.destroy(id);
+  }
+
+  async restore(id: any) {
+    return await this.employeeRepository.restore(id);
   }
 }

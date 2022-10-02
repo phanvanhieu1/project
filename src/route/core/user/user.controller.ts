@@ -4,15 +4,15 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Request } from 'express';
 
-@Controller('user')
+@Controller()
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
 
   @Get()
   findAll(@Req() req: Request) {
-    console.log(req);
-    return this.userService.findAll();
+    const id = req.user;
+    return this.userService.findAll(id);
   }
 
   @Get(':id')
