@@ -20,6 +20,8 @@ import { comparePassword } from 'src/util/hash/bcrypt';
 import UserEntity from './entities/auth.entity';
 import SignOutDto from './dto/sign-out.dto';
 import { forgotPasswordDto } from './dto/forgot-password.dto';
+import { changePasswordDto } from './dto/change-password.dto';
+import nodemailer from 'nodemailer';
 
 @Controller()
 export class AuthController {
@@ -58,15 +60,46 @@ export class AuthController {
 
   @Post('forgot-password')
   async forgotPassword(@Body() body: forgotPasswordDto): Promise<any | never> {
-    const userDB = await this.userRepository.checkUser(body.email);
-    if(userDB===null){
-      throw new Error(ErrorThrowEnum.EMAIL_ALREADY_EXISTS);
+    const checkUser = await this.userRepository.checkUser(body.email);
+    if(checkUser===null){
+      throw new Error(ErrorThrowEnum.USER_NOT_FOUND);
     }
-    const token = await this.authService.createVerifyToken(userDB._id, userDB.role);
-    const rs = {
-      accessToken: token,
-      user: userDB,
-    };
-    return ResponseUtils.success(rs);
+    const sendMail =await this.authService.sendMail(body.email);
+    console.log(sendMail);
+    // const transporter = nodemailer.createTransport({
+    //   service: 'gmail',
+    //   auth: {
+    //     user: 'thienphuc04072001@gmail.com',
+    //     pass: 'bprhhmixzifkzozs'
+    //   }
+    // });
+    // console.log(transporter);
+    // const mailOptions = {
+    //   from: body.email,
+    //   to: 'thienphuc04072001@gmail.com',
+    //   subject: `[ ${body.email} ] đã yêu cầu đổi mật khẩu ]`,
+    //   text: `Yêu cầu cấp lại mật khẩu cho email ${body.email}`
+    // }
+    // const mailOptions1 = {
+    //   from: 'thienphuc04072001@gmail.com',
+    //   to: body.email,
+    //   subject: `Xin chào ${body.email} !`,
+    //   text: 'Mã xác nhận của bạn là: 123456'
+    // }
+    // await transporter.sendMail(mailOptions, (err: any, data: any) => {
+    //   if (err) {
+    //     console.log(err);
+    //   } else {
+    //     console.log('Email sent!!!');
+    //   }
+    // });
+    // await transporter.sendMail(mailOptions1, (err: any, data: any) => {
+    //   if (err) {
+    //     console.log(err);
+    //   } else {
+    //     console.log('Email sent!!!');
+    //   }
+    // });
+    return ResponseUtils.success(checkUser);
   }
 }

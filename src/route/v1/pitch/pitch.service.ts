@@ -2,11 +2,13 @@ import { Injectable } from '@nestjs/common';
 import CreatePitchDto from './dto/create-pitch.dto';
 import PitchRepository from './pitch.repository';
 import { UpdatePitchDto } from './dto/update-pitch.dto';
+import UserRespository from 'src/route/core/user/user.repository';
 
 @Injectable()
 export class PitchService {
   constructor(
     private readonly pitchRepository: PitchRepository,
+    private readonly userRespository: UserRespository,
   ) {}
 
 
@@ -29,4 +31,5 @@ export class PitchService {
   async remove(id: any) {
     return await this.pitchRepository.remove(id);
   }
+
 }

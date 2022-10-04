@@ -16,6 +16,9 @@ export enum ErrorThrowEnum {
   PITCH_ALREADY_EXISTS = 'PITCH_ALREADY_EXISTS',
   EMPLOYEE_ALREADY_EXISTS = 'EMPLOYEE_ALREADY_EXISTS',
   EMPLOYEE_ALREADY_DELETED = 'EMPLOYEE_ALREADY_DELETED',
+  PITCH_ALREADY_EXISTS_IN_LIST = 'Sân đã có trong danh sách chờ duyệt, vui lòng chọn sân khác',
+  PITCH_NOT_ALREADY_EXISTS = 'Sân không tồn tại',
+  ORDER_NOT_ALREADY_EXISTS = 'Đơn hàng không tồn tại',
 }
 
 export const ErrorThrow = (...errorThrow: ErrorThrowEnum[]) => SetMetadata('errorThrow', errorThrow)

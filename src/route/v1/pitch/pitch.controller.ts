@@ -7,6 +7,7 @@ import { AdminGuard } from 'src/util/guard/admin.guard';
 import { RequestExpress } from 'src/util/interface/exception-response.interface';
 import ResponseUtils from 'src/util/response/response.utils';
 import { Types } from 'mongoose';
+import { UserGuard } from 'src/util/guard/user.guard';
 
 
 @Controller()

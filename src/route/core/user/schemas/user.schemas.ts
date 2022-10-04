@@ -44,6 +44,24 @@ export class User {
   })
   fullName: string = ''
 
+  @Prop({
+    type: Array,
+    default: [],
+  })
+  await: string[] = []
+
+  @Prop({
+    type: Array,
+    default: [],
+  })
+  using: string[] = []
+
+  @Prop({
+    type: Array,
+    default: [],
+  })
+  history: string[] = []
+
 //   @Prop({
 //     type: MongooseSchema.Types.ObjectId,
 //     ref: FileManager.name,
