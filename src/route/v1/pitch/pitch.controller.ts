@@ -17,7 +17,7 @@ export class PitchController {
 
   @Post()
   @UseGuards(AdminGuard)
-  // @UseGuards(AuthenticationGuard)
+  @UseGuards(AuthenticationGuard)
   async create(@Body() createPitchDto: CreatePitchDto) {
     const data =await this.pitchService.create(createPitchDto);
     return ResponseUtils.success(data);

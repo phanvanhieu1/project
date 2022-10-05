@@ -8,6 +8,7 @@ import {
   Delete,
   UseFilters,
   Request,
+  Res,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import SignUpDto from './dto/sign-up.dto';
@@ -22,6 +23,7 @@ import SignOutDto from './dto/sign-out.dto';
 import { forgotPasswordDto } from './dto/forgot-password.dto';
 import { changePasswordDto } from './dto/change-password.dto';
 import nodemailer from 'nodemailer';
+import {Response} from 'express';
 
 @Controller()
 export class AuthController {
@@ -42,7 +44,7 @@ export class AuthController {
   }
 
   @Post('sign-in')
-  async signIn(@Body() body: SignInDto): Promise<any | never> {
+  async signIn(@Body() body: SignInDto, @Res({passthrough: true}) res: Response): Promise<any | never> {
     const userDB = await this.userRepository.checkUser(body.email);
     if(userDB===null){
       throw new Error(ErrorThrowEnum.USER_NOT_FOUND);
@@ -55,6 +57,7 @@ export class AuthController {
       accessToken: await this.authService.createVerifyToken(userDB._id, userDB.role),
       user: userDB,
     }
+    res.cookie('Authorization', result.accessToken, { httpOnly: true });
     return ResponseUtils.success(result)
   }
 
