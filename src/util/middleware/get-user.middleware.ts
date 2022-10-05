@@ -15,7 +15,7 @@ export class getUserMiddleware implements NestMiddleware {
             const datatoken:any = jwt.verify(authJwt, process.env.JWT_SECRET);
             const user = datatoken;
             if(user) {
-                 req.user = user;
+                req.user = user;
             }else{
                 throw new Error(ErrorThrowEnum.INVALID_TOKEN);
             }
