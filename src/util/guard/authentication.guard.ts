@@ -5,7 +5,7 @@ import { ErrorThrowEnum } from "../enum/error.enum";
 export class AuthenticationGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
     const request = context.switchToHttp().getRequest();
-    const user = request.user;
+    const user = request.cookies['Authorization'];
     if (!user) {
       throw new Error(ErrorThrowEnum.UNAUTHORIZED_EXCEPTION);
     }
