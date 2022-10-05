@@ -57,12 +57,7 @@ export class AuthController {
       accessToken: await this.authService.createVerifyToken(userDB._id, userDB.role),
       user: userDB,
     }
-    res.cookie('Authorization', result.accessToken, { secure: process.env.NODE_ENV !== 'development',
-    httpOnly: true,
-    maxAge: 1000 * 60 * 60 * 24 * 7,
-    sameSite: 'none',
-  });
-
+    res.cookie('Authorization', result.accessToken, { httpOnly: true });
     return ResponseUtils.success(result)
   }
 
