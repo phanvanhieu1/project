@@ -60,6 +60,7 @@ seedDB().then(() => {
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(getUserMiddleware).forRoutes(
+      { path: '/core/user/update-password', method: RequestMethod.POST },
       //api pitch
       { path: 'v1/pitch', method: RequestMethod.GET },
       { path: 'v1/pitch', method: RequestMethod.POST },

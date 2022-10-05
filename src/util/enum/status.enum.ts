@@ -1,9 +1,8 @@
 import { SetMetadata } from '@nestjs/common'
 
 export enum StatusEnum {
-    EMPTY = 'EMPTY',
-    PENDING = 'PENDING',
-    APPROVED = 'APPROVED',
+    ACTIVE = 'ACTIVE',
+    INACTIVE = 'INACTIVE',
 }
 
 export const Status = (...status: StatusEnum[]) => SetMetadata('status', status)

@@ -6,7 +6,7 @@ import { ErrorThrowEnum } from "../enum/error.enum";
 @Injectable()
 export class getUserMiddleware implements NestMiddleware {
     use(req: Request, res: Response, next: NextFunction) {
-        const authJwt = req.headers.authorization;
+        const authJwt = req.cookies['Authorization'];
         if (!authJwt) {
             next();
             return;

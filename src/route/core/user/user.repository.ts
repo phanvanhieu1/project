@@ -25,9 +25,22 @@ export default class UserRespository {
     return await this.userModel.findOne({ email: data });
   }
 
+  public async checkUserById(id: string): Promise<any> {
+    const rs = await this.userModel.findById(id);
+    return rs;
+  }
+
   public async create(user: any): Promise<User> {
     const newUser = await this.userModel.create(user);
     return newUser;
+  }
+
+  public async updatePassword(id: any, newPass: any): Promise<any> {
+    const rs = await this.userModel.findByIdAndUpdate(
+      { _id: id },
+      { password: newPass },
+    );
+    return rs;
   }
 
   public async orderPitch(user: any, data: any): Promise<any> {

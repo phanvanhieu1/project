@@ -8,6 +8,7 @@ import { RequestExpress } from 'src/util/interface/exception-response.interface'
 import ResponseUtils from 'src/util/response/response.utils';
 import { Types } from 'mongoose';
 import { UserGuard } from 'src/util/guard/user.guard';
+import {Request} from 'express';
 
 
 @Controller()
@@ -20,6 +21,12 @@ export class PitchController {
   async create(@Body() createPitchDto: CreatePitchDto) {
     const data =await this.pitchService.create(createPitchDto);
     return ResponseUtils.success(data);
+  }
+
+  @Get('all')
+  findAll1(@Req() request: Request) {
+    // console.log(request.cookies); // or "request.cookies['cookieKey']"
+    // or console.log(request.signedCookies);
   }
 
   @Get()

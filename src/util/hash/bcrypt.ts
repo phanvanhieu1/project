@@ -4,7 +4,7 @@ import * as bcrypt from 'bcrypt';
 // const salt=process.env.SALT || 10;
 export function encodePassword(password: any): Promise<any> {
     const salt=bcrypt.genSaltSync();
-  return bcrypt.hash(password, salt);
+  return bcrypt.hash(password, 10);
 }
 
 export function comparePassword(password: any, hash: any): Promise<any> {

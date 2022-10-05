@@ -6,9 +6,11 @@ import { ValidationError, ValidationPipe } from '@nestjs/common';
 import  AllExceptionsFilter  from './util/filter/all-exceptions.filter';
 import ValidationExceptions from './util/exception/validation.exceptions';
 import { getUserMiddleware } from './util/middleware/get-user.middleware';
+import * as cookieParser from 'cookie-parser';
 var bodyParser = require('body-parser')
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule)
+  app.use(cookieParser());
   app.enableCors();
   app.useGlobalPipes(
     new ValidationPipe({

@@ -1,13 +1,23 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import updatePassWordDto from './dto/update-user.dto';
 import { Request } from 'express';
+import { RequestExpress } from 'src/util/interface/exception-response.interface';
+import { UserGuard } from 'src/util/guard/user.guard';
+import { AuthenticationGuard } from 'src/util/guard/authentication.guard';
 
 @Controller()
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @Post('update-password')
+  @UseGuards(UserGuard)
+  @UseGuards(AuthenticationGuard)
+  async updatePassword(@Req() req:RequestExpress, @Body() body: updatePassWordDto) {
+    const id = req.user.id;
+    return await this.userService.updatePassword(id, body);
+  }
 
   @Get()
   findAll(@Req() req: Request) {
@@ -18,11 +28,6 @@ export class UserController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.userService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+id, updateUserDto);
   }
 
   @Delete(':id')

@@ -20,7 +20,7 @@ export class Pitch {
 
     @Prop({
     type: String,
-    default: StatusEnum.EMPTY,
+    default: StatusEnum.ACTIVE,
   })
   status: StatusEnum
 
@@ -29,12 +29,6 @@ export class Pitch {
     type: String,
   })
   price: string = ''
-
-  @Prop({
-    type: String,
-    default: ''
-  })
-  assign: string = ''
 
   @Prop({
     type: String,

@@ -1,9 +1,9 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { ErrorThrowEnum } from 'src/util/enum/error.enum';
-import { encodePassword } from 'src/util/hash/bcrypt';
+import { comparePassword, encodePassword } from 'src/util/hash/bcrypt';
 import SignUpDto from '../auth/dto/sign-up.dto';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import updatePassWordDto from './dto/update-user.dto';
 import UserRepository from './user.repository';
 
 
@@ -27,6 +27,19 @@ export class UserService {
     
   }
 
+  async updatePassword(id: any, body: updatePassWordDto) {
+    const checkUser = await this.userRepository.checkUserById(id);
+    if(checkUser===null){
+      throw new Error(ErrorThrowEnum.USER_NOT_FOUND);
+    }
+    const newPassWord = await encodePassword(body.newPassWord);
+    const match = await comparePassword(body.oldPassWord, checkUser.password);
+    if (!match) {
+      throw new Error(ErrorThrowEnum.PASSWORD_NOT_MATCH);
+    }
+    return await this.userRepository.updatePassword(id, newPassWord);
+  }
+
   findAll(id:any) {
     return this.userRepository.findUser(id);
   }
@@ -35,9 +48,6 @@ export class UserService {
   
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
 
   remove(id: number) {
     return `This action removes a #${id} user`;
