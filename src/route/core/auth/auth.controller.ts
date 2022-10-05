@@ -59,7 +59,10 @@ export class AuthController {
     }
     res.cookie('Authorization', result.accessToken, { secure: process.env.NODE_ENV !== 'development',
     httpOnly: true,
-    expires: new Date(Date.now() + 900000),});
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+    sameSite: 'none',
+  });
+
     return ResponseUtils.success(result)
   }
 
