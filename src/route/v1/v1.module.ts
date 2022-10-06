@@ -4,6 +4,8 @@ import { EmployeeModule } from "./employee/employee.module";
 import { PitchModule } from "./pitch/pitch.module";
 import { ServiceModule } from './service/service.module';
 import { OrderModule } from './order/order.module';
+import { Statistic } from "./statistic/entities/statistic.entity";
+import { StatisticModule } from "./statistic/statistic.module";
 
 
 const routesv1: Routes = [
@@ -24,6 +26,10 @@ const routesv1: Routes = [
         {
             path: '/order',
             module: OrderModule,
+        },
+        {
+            path: '/statistic',
+            module: StatisticModule,
         }
     ]
     },

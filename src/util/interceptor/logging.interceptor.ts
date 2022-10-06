@@ -10,9 +10,7 @@ export class LoggingInterceptor implements NestInterceptor {
     intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
         const methodName = context.getHandler().name // create
         const controllerName = context.getClass().name // ClassController
-
         const request = context.switchToHttp().getRequest<Request>()
-
         const now = Date.now()
         return next
             .handle()
